@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
   	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{test}">
-<head th:replace="~{test :: head}"></head>
+<head th:replace="~{test :: head}">
+<style type="text/css">
+
+</style>
+</head>
 <body>
 <div layout:fragment="content">
 <div th:replace="~{test :: logo}"></div>
@@ -20,32 +24,38 @@
     <div class="input-group-prepend">
       <div class="input-group-text">@</div>
     </div>
-      <input type="email" th:field="*{email}" id="email" name="email" class="form-control" placeholder="Digite seu email">
+      <input type="email" th:field="*{email}" id="email" th:errorclass="is-invalid" name="email" class="form-control" placeholder="Digite seu email">
+       <div class="invalid-feedback" th:errors="*{email}"></div>
       </div>
     </div>
     <div class="form-group col-md-6">
-      <label for="inputPassword4">Password</label>
-      <input type="password" th:field="*{senha}" class="form-control" id="inputPassword4" placeholder="Digite sua senha">
+      <label for="inputPassword4">Senha</label>
+      <input type="password" th:field="*{senha}" th:errorclass="is-invalid" class="form-control"  placeholder="Digite sua senha">
+      <div class="invalid-feedback" th:errors="*{senha}"></div>
     </div>
   </div>
   <div class="form-row">
   <div class="form-group col-md-6">
     <label for="inputAddress">CEP</label>
-    <input type="text" th:field="*{cep}" class="form-control" id="inputAddress" placeholder="Exemplo de CEP: 72001830">
+    <input type="text" th:field="*{cep}" class="form-control" th:errorclass="is-invalid"  placeholder="Exemplo de CEP: 72001830">
+     <div class="invalid-feedback" th:errors="*{cep}"></div>
     </div>
   <div class="form-group col-md-6">
-    <label for="inputAddress">Nome</label>
-    <input type="text" th:field="*{Nome}" class="form-control" id="inputAddress" placeholder="Digite seu nome">
+    <label for="nome">Nome</label>
+    <input type="text" th:field="*{nome}" class="form-control" th:errorclass="is-invalid"  placeholder="Digite seu nome">
+	 <div class="invalid-feedback" th:errors="*{nome}"></div> 
  </div> 
  </div>
   <div class="form-group">
     <label for="inputAddress2">CPF</label>
-    <input type="text" th:field="*{cpf}" class="form-control" id="inputAddress2" placeholder="Exemplo de CPF: 02134432312">
+    <input type="text" th:field="*{cpf}" class="form-control" th:errorclass="is-invalid"  placeholder="Exemplo de CPF: 02134432312">
+  	 <div class="invalid-feedback" th:errors="*{cpf}"></div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputCity">Telefone</label>
-      <input type="text" th:field="*{telefone}" class="form-control" id="inputCity">
+      <input type="text" th:field="*{telefone}" th:errorclass="is-invalid" class="form-control">
+   	   <div class="invalid-feedback" th:errors="*{telefone}"></div>
     </div>
    
    

@@ -28,17 +28,17 @@ public class Usuario implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@NotBlank
-	@Size(max = 80,message = "Nome muito grande!")
+	@NotBlank(message = "Digite um nome")
+	@Size(max = 80,message = "Nome muito grande, abrevie algum sobrenome")
 	private String nome;
 	
 	@NotBlank(message = "e-mail não pode ser vazio")
-	@Size(max = 60, message = "E-mail muito grande!")
+	@Size(max = 60, message = "E-mail muito grande")
 	@Email(message = "E-mail invalido!")
 	private String email;
 	
-	@NotBlank(message = "Senha não pode ser vazia!")
-	@Size(max = 250, message = "Senha muito grande!")
+	@NotBlank(message = "Senha não pode ser vazia")
+	@Size(max = 250, message = "Senha muito grande")
 	private String senha;
 	
 	@NotBlank(message = "Telefone não pode ser vazio")
