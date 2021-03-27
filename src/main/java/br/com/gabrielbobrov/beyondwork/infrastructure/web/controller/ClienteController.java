@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import br.com.gabrielbobrov.beyondwork.application.serice.ClienteService;
+import br.com.gabrielbobrov.beyondwork.application.service.ClienteService;
 import br.com.gabrielbobrov.beyondwork.domain.cliente.Cliente;
 import br.com.gabrielbobrov.beyondwork.domain.cliente.ClienteRepository;
 

@@ -42,6 +42,7 @@ public class Prestador extends Usuario {
 	private String cpf;
 	
 	@Size(max = 80)
+	@NotBlank(message = "É necessário escolher uma foto")
 	private String foto;
 	
 	@UploadConstraint(acceptedTypes = FileType.PNG, message = "Arquivo precisa estar em formato PNG" )
@@ -67,6 +68,13 @@ public class Prestador extends Usuario {
 	@ToString.Exclude
 	private Set<CategoriaPrestador> servicosOferecidos = new HashSet<>(0);
 	
+	public void setFotoFileName() {
+		if(getId() == null) {
+			throw new IllegalStateException("É preciso primeiro gravar o registro");
+		}
+		
+		this.foto = String.format("%04d-logo.%s", getId(), FileType.of(fotoFile.getContentType()).getExtension());
+	}
 	//TODO: calcular tempo chegada
 	//TODO:getCategoriaAsText
 }
