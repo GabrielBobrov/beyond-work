@@ -15,7 +15,7 @@
 </div>
 
 <div class="container card ">
-	<form method="post" th:object="${prestador}" th:action="@{/public/prestador/save}">
+	<form method="post" th:object="${prestador}" th:action="@{/public/prestador/save}" enctype="multipart/form-data">
   <div class="form-row">
   
     <div class="form-group col-md-6">
@@ -72,6 +72,13 @@
    
    
   </div>
+   <div class="form-group col-md-12">
+      <label for="inputCity">Categorias</label>
+     <select   class="form-select" name="categoria" id="categoria" multiple="multiple" th:field="*{servicosOferecidos}" >
+     	<option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nome}"></option>
+     </select>
+   	   <div class="invalid-feedback" th:errors="*{fotoFile}"></div>
+    </div>
   
   <button type="submit" class="btn btn-primary btn-lg btn-block">Cadastrar</button>
 </form>

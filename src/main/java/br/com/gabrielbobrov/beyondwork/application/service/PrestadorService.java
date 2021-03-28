@@ -20,6 +20,9 @@ public class PrestadorService {
 	@Autowired
 	private ClienteRepository clienteRepository;
 	
+	@Autowired
+	private ImageService imageService;
+	
 	@Transactional
 	public void savePrestador (Prestador prestador)  {
 		if(!validateEmail(prestador.getEmail(), prestador.getId())) {
@@ -35,6 +38,9 @@ public class PrestadorService {
 		//}
 	
 		prestadorRepository.save(prestador);
+		prestador.setFotoFileName();
+		imageService.uploadLogotipo(prestador.getFotoFile(), prestador.getFoto());
+		
 		
 	}
 	

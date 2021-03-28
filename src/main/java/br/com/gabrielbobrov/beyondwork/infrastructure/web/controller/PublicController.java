@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import br.com.gabrielbobrov.beyondwork.application.service.ClienteService;
 import br.com.gabrielbobrov.beyondwork.application.service.PrestadorService;
 import br.com.gabrielbobrov.beyondwork.domain.cliente.Cliente;
+import br.com.gabrielbobrov.beyondwork.domain.prestador.CategoriaPrestadorRepository;
 import br.com.gabrielbobrov.beyondwork.domain.prestador.Prestador;
 
 @Controller
@@ -26,6 +27,9 @@ public class PublicController {
 	@Autowired
 	private PrestadorService prestadorService;
 	
+	@Autowired
+	private CategoriaPrestadorRepository categoriaPrestadorRepository;
+	
 	@GetMapping("/login")
 	public String login() {
 		return "/login";
@@ -34,13 +38,16 @@ public class PublicController {
 	@GetMapping("/prestador/cadastro")
 	public String pagePrestadorCadastro(@ModelAttribute("prestador") Prestador prestador, Model model) {
 		
+		ControllerHelper.addCategoriasToRequest(categoriaPrestadorRepository, model);
 		return "/prestador-cadastro";
 	}
 	@PostMapping("/prestador/save")
 	public String prestadorCadastro( @ModelAttribute("prestador") @Valid Prestador prestador, BindingResult result, Model model) {
+		ControllerHelper.addCategoriasToRequest(categoriaPrestadorRepository, model);
 		if(result.hasErrors()) {
 			return "/prestador-cadastro";
 		}
+	 ControllerHelper.addCategoriasToRequest(categoriaPrestadorRepository, model);
 	 prestadorService.savePrestador(prestador);
 		
 		return "/prestador-cadastro";
