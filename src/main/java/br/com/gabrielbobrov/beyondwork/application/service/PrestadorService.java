@@ -38,8 +38,6 @@ public class PrestadorService {
 		//}
 	
 		prestadorRepository.save(prestador);
-		prestador.setFotoFileName();
-		imageService.uploadLogotipo(prestador.getFotoFile(), prestador.getFoto());
 		
 		
 	}

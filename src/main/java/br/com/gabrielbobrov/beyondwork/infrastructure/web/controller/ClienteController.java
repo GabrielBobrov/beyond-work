@@ -23,11 +23,12 @@ public class ClienteController {
 	
 	@Autowired
 	private ClienteService clienteService;
+	
 	//metodo deve estar na public controller
-	@GetMapping("/cadastro")
-	public String home(@ModelAttribute("cliente") Cliente cliente,Model model) {
+	@GetMapping("/home")
+	public String home(Model model) {
 		
-		return "/cliente-cadastro";
+		return "/cliente-home";
 	}
 	@PostMapping("/save")
 	public String cadastro( @ModelAttribute("cliente") @Valid Cliente cliente, BindingResult result, Model model) {
