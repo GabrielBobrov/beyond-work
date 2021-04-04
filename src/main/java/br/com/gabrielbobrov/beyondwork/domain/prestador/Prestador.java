@@ -2,6 +2,7 @@ package br.com.gabrielbobrov.beyondwork.domain.prestador;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import br.com.gabrielbobrov.beyondwork.domain.usuario.Usuario;
 import br.com.gabrielbobrov.beyondwork.infrastructure.web.validator.UploadConstraint;
 import br.com.gabrielbobrov.beyondwork.util.FileType;
+import br.com.gabrielbobrov.beyondwork.util.StringUtils;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -65,6 +67,26 @@ public class Prestador extends Usuario {
 	private Set<CategoriaPrestador> servicosOferecidos = new HashSet<>(0);
 	
 	
-	//TODO: calcular tempo chegada
-	//TODO:getCategoriaAsText
+	public Integer calcularTempoEntrega(String cep) {
+		int soma = 0;
+		for( char c : cep.toCharArray()) {
+			int v =Character.getNumericValue(c);//getnumericvalue converte string em int
+			if(v>0) {
+				soma+=v;
+				
+			}
+			
+		}
+		soma/=2;
+		return tempoChegarVista + soma;
+	}
+	public String getCategoriaAsText() {
+		Set<String> strings = new LinkedHashSet<>(); //linkedhashset não permite elementos duplicados
+		
+		for(CategoriaPrestador categoria : servicosOferecidos) {
+			strings.add(categoria.getNome());
+		}
+		
+		return StringUtils.concatenate(strings);
+	}
 }

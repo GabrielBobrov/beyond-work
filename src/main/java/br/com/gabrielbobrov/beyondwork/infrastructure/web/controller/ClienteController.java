@@ -39,5 +39,10 @@ public class ClienteController {
 		
 		return "/cliente-cadastro";
 	}
+	@GetMapping("/search")
+	public String search(Model model) {
+		
+		return "/cliente-search";
+	}
 
 }
