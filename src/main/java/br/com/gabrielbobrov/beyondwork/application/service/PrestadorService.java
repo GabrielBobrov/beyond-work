@@ -73,7 +73,7 @@ public class PrestadorService {
 		if (filter.getSearchType() == SearchType.Texto) {
 			prestadores = prestadorRepository.findByNomeIgnoreCaseContaining(filter.getTexto());
 		} else if (filter.getSearchType() == SearchType.Categoria) {
-			prestadores = prestadorRepository.findByCategorias_Id(filter.getCategoriaId());
+			prestadores = prestadorRepository.findByservicosOferecidos_Id(filter.getCategoriaId());
 
 		} else {
 			throw new IllegalStateException("O tipo de busca " + filter.getSearchType() + " não é suportado");

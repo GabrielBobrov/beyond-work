@@ -10,6 +10,6 @@ public interface PrestadorRepository extends JpaRepository<Prestador, Integer> {
 
 	public List<Prestador> findByNomeIgnoreCaseContaining(String nome);
 
-	public List<Prestador> findByCategorias_Id(Integer categoriaId);
+	public List<Prestador> findByservicosOferecidos_Id(Integer categoriaId);
 
 }

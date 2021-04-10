@@ -3,42 +3,52 @@
   	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{test}">
 <head th:replace="~{test :: head}">
 
+<style type="text/css">
+.form-control-borderless {
+    border: none;
+}
 
+.form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus {
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+</style>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js'></script>
 </head>
 
 <body>
 <div layout:fragment="content">
 <div th:replace="~{test :: logo}"></div>
 
-<div class="col-lg-4 col-lg-offset-4">
-<h2>Home do cliente</h2>
+<div class="col-lg-6 col-lg-offset-4">
+<h2>Página de pesquisa de prestador</h2>
 </div>
-<div class="card mb-3">
-<div class="card-body">
-			<div class = "row">
-				<div class="col-12 col-sm-8 mb-3">
-				<div class="row">
-					<div class="col-md-5"> Valor: <span ></span></div>
-					<div class="col-md-7"> Data da visita: <span></span>
-					</div>
-				</div>
-
-					<div>Serviço:</div>
-					<div>
-						<input class="form-control" value="teste" />
-					</div>
-
-					<div>Descrição</div>
-					<div>
-						<textarea class="form-control" rows="" cols="">Descricao serviço</textarea>
-					</div>
-				</div>
-
-				
-			</div>
-
-			</div>
-		</div>
+<div class="container">
+    <br/>
+	<div class="row justify-content-center">
+                        <div class="col-12 col-md-10 col-lg-8">
+                            <form class="card card-sm">
+                                <div class="card-body row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <i class="fas fa-search h4 text-body"></i>
+                                    </div>
+                                    <!--end of col-->
+                                    <div class="col">
+                                        <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords">
+                                    </div>
+                                    <!--end of col-->
+                                    <div class="col-auto">
+                                        <button class="btn btn-lg btn-success" type="submit">Search</button>
+                                    </div>
+                                    <!--end of col-->
+                                </div>
+                            </form>
+                        </div>
+                        <!--end of col-->
+                    </div>
+</div>
 
 
 

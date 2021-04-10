@@ -38,7 +38,7 @@
 </div>
 <nav  class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="logo">
   <div class="container-fluid justify-content-between">
-    <a class="navbar-brand"  href="#">Home</a>
+    <a class="navbar-brand"  th:href="@{/cliente/home}">Home</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -46,19 +46,14 @@
       <div class="navbar-nav me-auto mb-2 mb-lg-0">
         <div class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Home
+          Ações
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Ultimos serviços</a>
-          <a class="dropdown-item" href="#">Pesquisar por serviços</a>
+          <a class="dropdown-item" th:href="@{/cliente/search}">Pesquisar por serviços</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Editar conta</a>
         </div>
       </div>
-        <div class="nav-item">
-          <a class="nav-link" href="#">Serviços</a>
-        </div>
-         
         <div class="nav-item">
           <a class="nav-link" href="#">Logout</a>
         </div>
