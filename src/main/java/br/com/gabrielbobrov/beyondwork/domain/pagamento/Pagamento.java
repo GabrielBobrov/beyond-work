@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import br.com.gabrielbobrov.beyondwork.domain.pedido.Pedido;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
