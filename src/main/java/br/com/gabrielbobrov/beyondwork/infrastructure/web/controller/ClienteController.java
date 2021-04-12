@@ -56,11 +56,20 @@ public class ClienteController {
 		return "/cliente-search";
 	}
 	
-	@GetMapping("/prestador")
-	public String viewPrestador(Model model) {
+	@GetMapping("/agendamento")
+	public String viewAgendamento(Model model) {
 		List<CategoriaPrestador> categorias = categoriaPrestadorRepository.findAll(Sort.by("nome"));
 		model.addAttribute("categorias", categorias);
-		return "/cliente-prestador";
+		return "/cliente-agendamento";
 	}
+	
+	@GetMapping("/pedido/")
+	public String viewPedidos(Model model) {
+		List<CategoriaPrestador> categorias = categoriaPrestadorRepository.findAll(Sort.by("nome"));
+		model.addAttribute("categorias", categorias);
+		return "/cliente-pedido";
+	}
+	
+	
 
 }

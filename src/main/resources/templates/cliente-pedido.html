@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{test}">
+<head th:replace="~{test :: head}">
+<style type="text/css">
+img {width:100%;}
+
+</style>
+
+</head>
+<body>
+<div layout:fragment="content">
+<div th:replace="~{test :: logo}"></div>
+<div th:replace="~{test :: nav}"></div>
+
+<section class="testimonial py-5" id="testimonial">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-4 py-5 bg-primary text-white text-center ">
+                <div class=" ">
+                    <div class="card-body">
+                        <img src="https://image.flaticon.com/icons/png/128/3039/3039498.png" style="width:50%">
+                      
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 py-5 border">
+            <form>
+               
+                    <div class="form-row">
+                    	
+                        <div class="form-group col-md-6">
+                          <input type="email" class="form-control" disabled id="inputEmail4" placeholder="Nome do prestador">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <input type="datetime-local" class="form-control" disabled id="inputEmail4" placeholder="Data">
+                        </div>
+                      </div>
+                      
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input id="Mobile No." name="Mobile No." placeholder="CEP de destino" disabled class="form-control" required="required" type="text">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input id="Mobile No." name="Mobile No." placeholder="Tipo de serviço" disabled class="form-control" required="required" type="text">
+                        </div>
+                        
+                        
+                    </div>
+                    
+                    
+                    
+                      <div class="form-group col-md-12">
+                    <div class="form-row">
+                    <h5 >Total: </h5>
+                             <div id="preco" class="price text-success"><h5 class="ml-3"> R$145,00</h5></div>
+                        </div>
+                     </div>
+                    
+                    
+                    
+                </form>
+            </div>
+            
+            
+        </div>
+    </div>
+</section>
+
+		</div>
+
+</body>
+</html>

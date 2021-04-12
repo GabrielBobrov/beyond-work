@@ -1,19 +1,21 @@
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
   	  xmlns:th="http://www.thymeleaf.org" layout:decorate="~{test}">
 <head th:replace="~{test :: head}">
 <style type="text/css">
 img {width:100%;}
+
 </style>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 </head>
 <body>
 <div layout:fragment="content">
 <div th:replace="~{test :: logo}"></div>
 <div th:replace="~{test :: nav}"></div>
-
+<div class="alert alert-success text-center" role="alert">
+  O prestador recebeu seu agendamento!
+</div>
 <section class="testimonial py-5" id="testimonial">
     <div class="container">
         <div class="row ">
@@ -22,24 +24,25 @@ img {width:100%;}
                     <div class="card-body">
                         <img src="http://www.ansonika.com/mavia/img/registration_bg.svg" style="width:30%">
                         <h2 class="py-3">Politicas que você precisa saber!</h2>
-                        <p>Para todo serviço é cobrado uma taxa de garantia de R$20,00, que será abatido no pagamento final do serviço.
-
-</p>
+                        <p>Para todo serviço é cobrado uma taxa de garantia de R$20,00, que será abatido no pagamento final do serviço.</p>
+                        <p>Após a confirmação do pagamento o prestador pode confirmar ou cancelar seu serviço, fique de olho nos serviços confirmados!</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-8 py-5 border">
-                <h2 class="pb-4">Confirmação de agendamento</h4>
-                <form>
+            <form>
+                <h2 class="pb-4">Confirmação de agendamento</h2>
+                
                     <div class="form-row">
                     	
                         <div class="form-group col-md-6">
                           <input type="email" class="form-control" id="inputEmail4" placeholder="Nome do prestador">
                         </div>
                         <div class="form-group col-md-6">
-                          <input type="date" class="form-control" id="inputEmail4" placeholder="Email">
+                          <input type="datetime-local" class="form-control" id="inputEmail4" placeholder="Data">
                         </div>
                       </div>
+                      
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <input id="Mobile No." name="Mobile No." placeholder="CEP de destino" class="form-control" required="required" type="text">
@@ -51,20 +54,37 @@ img {width:100%;}
                         
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <input id="Mobile No." name="Mobile No." placeholder="CEP de destino" class="form-control" required="required" type="text">
+                        <div class="form-group col-md-12">
+                            <input id="Mobile No." name="Mobile No." placeholder="Informações adicionais" class="form-control" required="required" type="text">
                         </div>
                         
                         
                         
                     </div>
+                    
                     <div class="form-group col-md-6">
-                             <div class="price text-success"><h5 class="mt-4">R$125</h5></div>
+                    <div class="form-row">
+                    <h5>Valor do serviço: </h5>
+                             <div id="preco" class="price text-success"><h5 class="ml-3"> R$125,00</h5></div>
                         </div>
+                     </div>
+                      <div class="form-group col-md-6">
+                    <div class="form-row">
+                    <h5>Valor de garantia: </h5>
+                             <div id="preco" class="price text-success"><h5 class="ml-3"> R$20,00</h5></div>
+                        </div>
+                     </div>
+                      <div class="form-group col-md-12">
+                    <div class="form-row">
+                    <h5 >Total: </h5>
+                             <div id="preco" class="price text-success"><h5 class="ml-3"> R$145,00</h5></div>
+                        </div>
+                     </div>
                     
                     
                     <div class="form-row">
-                        <button type="button" class="btn btn-danger">Submit</button>
+                        <button type="button" class="btn btn-primary mr-2 mt-3">Agendar Serviço</button>
+                        <button type="button" class="btn btn-danger mt-3">Voltar</button>
                     </div>
                 </form>
             </div>
