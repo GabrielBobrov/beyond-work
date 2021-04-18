@@ -69,7 +69,7 @@ public class PrestadorService {
 	}
 
 	public List<Prestador> search(SearchFilter filter) {
-		List<Prestador> prestadores;
+		/*List<Prestador> prestadores;
 		if (filter.getSearchType() == SearchType.Texto) {
 			prestadores = prestadorRepository.findByNomeIgnoreCaseContaining(filter.getTexto());
 		} else if (filter.getSearchType() == SearchType.Categoria) {
@@ -88,10 +88,10 @@ public class PrestadorService {
 				it.remove();
 			}
 
-		}
+		}*/
 		//TODO: spring security PrestadorComparator comparator = new PrestadorComparator(filter, SecurityUtils.loggedCliente().getCep());
 		//prestadores.sort(comparator);// usa o comparator como base para ordenar a lista de restaurantes
-		return prestadores;
+		return prestadorRepository.findAll();
 
 	}
 

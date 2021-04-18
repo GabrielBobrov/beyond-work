@@ -61,7 +61,6 @@ public class ClienteController {
 	}
 	@GetMapping("/search")
 	public String search(@ModelAttribute ("searchFilter") SearchFilter filter, Model model) {
-		
 		List<Prestador> prestadores = prestadorService.search(filter);
 		ControllerHelper.addCategoriasToRequest(categoriaPrestadorRepository, model);
 		model.addAttribute("prestadores",prestadores);
