@@ -1,4 +1,4 @@
-package br.com.gabrielbobrov.beyondwork.domain.Agendamento;
+package br.com.gabrielbobrov.beyondwork.domain.agendamento;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

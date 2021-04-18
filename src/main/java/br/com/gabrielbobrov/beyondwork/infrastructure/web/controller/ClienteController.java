@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.gabrielbobrov.beyondwork.application.service.ClienteService;
+import br.com.gabrielbobrov.beyondwork.application.service.PrestadorService;
 import br.com.gabrielbobrov.beyondwork.domain.cliente.Cliente;
 import br.com.gabrielbobrov.beyondwork.domain.cliente.ClienteRepository;
 import br.com.gabrielbobrov.beyondwork.domain.prestador.CategoriaPrestador;
 import br.com.gabrielbobrov.beyondwork.domain.prestador.CategoriaPrestadorRepository;
+import br.com.gabrielbobrov.beyondwork.domain.prestador.Prestador;
+import br.com.gabrielbobrov.beyondwork.domain.prestador.PrestadorRepository;
+import br.com.gabrielbobrov.beyondwork.domain.prestador.SearchFilter;
 
 @Controller
 @RequestMapping("/cliente")
@@ -28,6 +32,12 @@ public class ClienteController {
 	
 	@Autowired
 	private ClienteService clienteService;
+	
+	@Autowired
+	private PrestadorRepository prestadorRepository;
+	
+	@Autowired
+	private PrestadorService prestadorService;
 	
 	@Autowired
 	private CategoriaPrestadorRepository categoriaPrestadorRepository;
@@ -50,9 +60,12 @@ public class ClienteController {
 		return "/cliente-cadastro";
 	}
 	@GetMapping("/search")
-	public String search(Model model) {
-		List<CategoriaPrestador> categorias = categoriaPrestadorRepository.findAll(Sort.by("nome"));
-		model.addAttribute("categorias", categorias);
+	public String search(@ModelAttribute ("searchFilter") SearchFilter filter, Model model) {
+		
+		List<Prestador> prestadores = prestadorService.search(filter);
+		ControllerHelper.addCategoriasToRequest(categoriaPrestadorRepository, model);
+		model.addAttribute("prestadores",prestadores);
+		model.addAttribute("searchFilter",filter);
 		return "/cliente-search";
 	}
 	
