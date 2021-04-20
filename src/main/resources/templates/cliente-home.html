@@ -22,18 +22,20 @@
     <br/>
 	<div class="row justify-content-center">
                         <div class="col-12 col-md-10 col-lg-8">
-                            <form class="card card-sm" method="get" th:action="@{/cliente/search}">
+                            <form id="form" class="card card-sm" method="get" th:object="${searchFilter}" th:action="@{/cliente/search}">
                                 <div class="card-body row no-gutters align-items-center">
                                     <div class="col-auto">
                                         <i class="fas fa-search h4 text-body"></i>
                                     </div>
-                                    <!--end of col-->
+                                
                                     <div class="col">
-                                        <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Pesquise pelo nome do prestador">
+                                    <input type="hidden" id="searchType" th:field="*{searchType}">
+                                    <input type="hidden" id="categoriaId" th:field="*{categoriaId}">
+                                        <input class="form-control form-control-lg form-control-borderless" th:field="*{texto}" type="text" placeholder="Pesquise pelo nome do prestador">
                                     </div>
-                                    <!--end of col-->
+                                   
                                     <div class="col-auto">
-                                        <button class="btn btn-lg btn-primary" type="submit">Pesquisar</button>
+                                        <button class="btn btn-lg btn-primary" onclick="searchRest(null);" type="submit">Pesquisar</button>
                                     </div>
                                     <!--end of col-->
                                 </div>
@@ -45,11 +47,11 @@
 
 			<div class="container mt-5">
     <div class="row g-2">
-        <div class="col-md-4" th:each="categoria : ${categorias}">
+        <div class="col-md-4 mb-3" th:each="categoria : ${categorias}">
             <div class="card p-3">
                 <div class="mt-3"> <img th:src="${categoria.imagem}" width="80" />
-                    <h3 class="mt-3 text-truncate" th:text="${categoria.nome}"></h3> <span class="text justify-content mt-3">They arrived in fifty mother ships,<br>offering their friendship and advanced<br>technology to Earth</span>
-                    <div class="d-block mt-3"> <button class=" btn btn-primary btn-sm btn-block">Ver prestadores da categoria</button> </div>
+                    <h3 class="mt-3 text-truncate" th:text="${categoria.nome}"></h3> <span class="text justify-content mt-3">Descrição que precisa salvar no banco da categoria</span>
+                    <div class="d-block mt-3"> <button th:onclick="'searchRest(' + ${categoria.id} + ');'" class=" btn btn-primary btn-sm btn-block">Ver prestadores da categoria</button> </div>
                 </div>
             </div>
         </div>
@@ -57,7 +59,11 @@
       
     </div>
 </div>
+
 		</div>
 
 </body>
+<script type="text/javascript">
+	
+</script>
 </html>

@@ -47,6 +47,7 @@ public class ClienteController {
 	public String home(Model model) {
 		List<CategoriaPrestador> categorias = categoriaPrestadorRepository.findAll(Sort.by("nome"));
 		model.addAttribute("categorias", categorias);
+		model.addAttribute("searchFilter", new SearchFilter());
 		//implementar segurança para fazer pedidos by cliente
 		return "/cliente-home";
 	}
@@ -61,6 +62,7 @@ public class ClienteController {
 	}
 	@GetMapping("/search")
 	public String search(@ModelAttribute ("searchFilter") SearchFilter filter, Model model) {
+		//filter.processFilter(cmdString);
 		List<Prestador> prestadores = prestadorService.search(filter);
 		ControllerHelper.addCategoriasToRequest(categoriaPrestadorRepository, model);
 		model.addAttribute("prestadores",prestadores);
