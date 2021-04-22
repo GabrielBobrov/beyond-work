@@ -47,7 +47,7 @@ body {
 <div class="col-lg-6 col-lg-offset-4">
 <h2>Página de pesquisa de prestador</h2>
 </div>
-<form id="form" th:object="${searchFilter}" th:action="@{/cliente/search}" class="card card-sm">
+<form id="form" th:object="${searchFilter}" th:action="@{/cliente/search}" >
 <input type="hidden" id="searchType" th:field="*{searchType}">
 <input type="hidden" id="categoriaId" th:field="*{categoriaId}">
 <div class="text-center">
