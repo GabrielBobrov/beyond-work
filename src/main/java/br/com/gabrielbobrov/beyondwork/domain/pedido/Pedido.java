@@ -34,7 +34,7 @@ public class Pedido implements Serializable {
 	
 	public enum Status{
 		Producao(1,"Em produção", false),
-		Entrega(2,"Saiu para entrega", false),
+		Entrega(2,"Saiu para atendimento", false),
 		Concluido(3,"Concluido",true);
 		
 		Status(int ordem, String descricao, boolean ultimo) {
