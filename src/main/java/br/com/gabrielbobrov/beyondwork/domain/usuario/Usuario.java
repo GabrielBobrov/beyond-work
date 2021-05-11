@@ -41,11 +41,43 @@ public class Usuario implements Serializable{
 	@Size(max = 250, message = "Senha muito grande")
 	private String senha;
 	
+	@NotBlank(message = "Senha não pode ser vazia")
+	@Column(insertable = false,updatable = false)
+	@Size(max = 250, message = "Senha muito grande")
+	private String contraSenha;
+	
 	@NotBlank(message = "Telefone não pode ser vazio")
 	@Pattern(regexp = "[0-9]{10,11}", message= "Telefone possui formato inválido")
 	@Size(max = 60, message = "Telefone muito grande")
 	@Column(length = 11, nullable = false)
 	private String telefone;
+	
+	@NotBlank(message = "O CEP não pode ser vazio")
+	@Pattern(regexp = "[0-9]{8}", message= "O CEP possui formato inválido")
+	@Column(length = 8)
+	private String cep;
+	
+	@NotBlank
+	private String bairro;
+	
+	@NotBlank
+	private String rua;
+	
+	@NotBlank
+	private String cidade;
+	
+	@NotBlank
+	private String uf;
+	
+	@NotBlank(message = "Digite o complemento")
+	private String complemento;
+	 
+	
+public String getFormattedCep() {
+		
+		return cep.substring(0,5) + "-" + cep.substring(5);
+		
+	}
 	
 	//TODO: encrypt password
 

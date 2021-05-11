@@ -21,6 +21,7 @@
                 $("#cidade").val("");
                 $("#uf").val("");
                 $("#ibge").val("");
+                $("#complemento").val("");
             }
             
             //Quando o campo cep perde o foco.
@@ -75,6 +76,20 @@
                 }
             });
         });
+        
+        function checkPasswordMatch() {
+            var password = $("#senha").val();
+            var confirmPassword = $("#contraSenha").val();
+            if (password != confirmPassword)
+            	$('#cadastro').attr('disabled', 'disabled'),
+                $("#CheckPasswordMatch").html("Senhas estão diferentes!");
+            else
+            	$('#cadastro').removeAttr('disabled'),
+                $("#CheckPasswordMatch").html("Senhas estão OK.");
+        }
+        $(document).ready(function () {
+           $("#contraSenha").keyup(checkPasswordMatch);
+        });
 
     </script>
 <body>
@@ -82,13 +97,43 @@
 <div th:replace="~{test :: logo}"></div>
 
 <div class="col-lg-4 col-lg-offset-4">
-<h2>Cadastro de cliente</h2>
+<h2>Cadastro de Cliente</h2>
 </div>
 
 <div class="container card ">
 	<form method="post" th:object="${cliente}" th:action="@{/public/cliente/save}">
-  <div class="form-row">
+	
+	<div class="form-row"> 
+      <div class="form-group col-md-6">
+    <label for="nome">Nome</label>
+    <input type="text" th:field="*{nome}" class="form-control" th:errorclass="is-invalid"  placeholder="Digite seu nome">
+	 <div class="invalid-feedback" th:errors="*{nome}"></div> 
+ </div> 
+       <div class="form-group col-md-6">
+    <label for="nome">Sobrenome</label>
+    <input type="text" th:field="*{nome}" class="form-control" th:errorclass="is-invalid"  placeholder="Digite seu nome">
+	 <div class="invalid-feedback" th:errors="*{nome}"></div> 
+ </div> 
+  </div>
+	
+	  <div class="form-row"> 
+    <div class="form-group col-md-6">
+      <label for="inputCity">Telefone</label>
+      <input type="text" th:field="*{telefone}" th:errorclass="is-invalid" class="form-control" placeholder="Somente números">
+   	   <div class="invalid-feedback" th:errors="*{telefone}"></div>
+    </div>
+      <div class="form-group col-md-6">
+    <label for="inputAddress2">CPF</label>
+    <input type="text" th:field="*{cpf}" class="form-control" th:errorclass="is-invalid"  placeholder="Somente números">
+  	 <div class="invalid-feedback" th:errors="*{cpf}"></div>
+  </div>  
+  </div>
   
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Senha</label>
+      <input type="password" th:field="*{senha}" th:errorclass="is-invalid" class="form-control"  placeholder="Digite sua senha">
+    </div>
     <div class="form-group col-md-6">
       <label for="email">Email</label>
        <div class="input-group mb-2 mr-sm-2">
@@ -100,48 +145,49 @@
       </div>
     </div>
     <div class="form-group col-md-6">
-      <label for="inputPassword4">Senha</label>
-      <input type="password" th:field="*{senha}" th:errorclass="is-invalid" class="form-control"  placeholder="Digite sua senha">
+    <label for="inputPassword4">Confirmação de senha</label>
+      <input type="password" th:field="*{contraSenha}"  th:errorclass="is-invalid" class="form-control"  placeholder="Digite sua senha">
       <div class="invalid-feedback" th:errors="*{senha}"></div>
+    <div class="registrationFormAlert" style="color:green;" id="CheckPasswordMatch"></div>
     </div>
-  </div>
-  <div class="form-row">
-  <div class="form-group col-md-6">
+    <div class="form-group col-md-6">
     <label for="inputAddress">CEP</label>
-    <input type="text" th:field="*{cep}" class="form-control" th:errorclass="is-invalid"  placeholder="Exemplo de CEP: 72001830">
+    <input type="text" th:field="*{cep}" class="form-control" th:errorclass="is-invalid"  placeholder="Somente números">
      <div class="invalid-feedback" th:errors="*{cep}"></div>
     </div>
-    <div class="form-group col-md-6">
-    <label for="inputAddress">UF</label>
-    <input type="text" id="uf" class="form-control"   placeholder="Exemplo de CEP: 72001830">
-    </div>
-    <div class="form-group col-md-6">
-    <label for="inputAddress">Cidade</label>
-    <input type="text" id="cidade" class="form-control"   placeholder="Exemplo de CEP: 72001830">
-    </div>
-  <div class="form-group col-md-6">
-    <label for="nome">Nome</label>
-    <input type="text" th:field="*{nome}" class="form-control" th:errorclass="is-invalid"  placeholder="Digite seu nome">
-	 <div class="invalid-feedback" th:errors="*{nome}"></div> 
- </div> 
- </div>
-  <div class="form-group">
-    <label for="inputAddress2">CPF</label>
-    <input type="text" th:field="*{cpf}" class="form-control" th:errorclass="is-invalid"  placeholder="Exemplo de CPF: 02134432312">
-  	 <div class="invalid-feedback" th:errors="*{cpf}"></div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputCity">Telefone</label>
-      <input type="text" th:field="*{telefone}" th:errorclass="is-invalid" class="form-control">
-   	   <div class="invalid-feedback" th:errors="*{telefone}"></div>
-    </div>
-    
-   
-   
   </div>
   
-  <button type="submit" class="btn btn-primary btn-lg btn-block">Cadastrar</button>
+  <div class="form-row">
+   <div class="form-group col-md-6">
+    <label for="inputAddress">Cidade</label>
+    <input type="text"  th:field="*{cidade}" id="cidade" class="form-control" th:errorclass="is-invalid"   placeholder=" ">
+    <div class="invalid-feedback" th:errors="*{cidade}"></div>
+    </div>
+  
+    <div class="form-group col-md-6">
+    <label for="inputAddress">UF</label>
+    <input type="text"  th:field="*{uf}"  id="uf" class="form-control" th:errorclass="is-invalid"   placeholder="">
+    <div class="invalid-feedback" th:errors="*{uf}"></div>
+    </div>
+    <div class="form-group col-md-6">
+    <label for="inputAddress">Endereço</label>
+    <input type="text"  th:field="*{rua}" id="rua" class="form-control" th:errorclass="is-invalid"   placeholder=" ">
+    <div class="invalid-feedback" th:errors="*{rua}"></div>
+    </div>
+    <div class="form-group col-md-6">
+    <label for="inputAddress">Bairro</label>
+    <input type="text"  th:field="*{bairro}" id="bairro" class="form-control" th:errorclass="is-invalid"   placeholder=" ">
+    <div class="invalid-feedback" th:errors="*{bairro}"></div>
+    </div>
+    <div class="form-group col-md-12">
+    <label for="inputAddress">Complemento</label>
+    <input type="text" th:field="*{complemento}" id="complemento" class="form-control" th:errorclass="is-invalid"   placeholder=" ">
+    <div class="invalid-feedback" th:errors="*{complemento}"></div>
+    </div>
+ </div>
+  
+  <button type="submit" disabled="disabled" id="cadastro" class="btn btn-primary btn-lg btn-block">Cadastrar</button>
+   <button type="submit" class="btn btn-primary btn-lg btn-block">Sair</button>
 </form>
 
 </div>
