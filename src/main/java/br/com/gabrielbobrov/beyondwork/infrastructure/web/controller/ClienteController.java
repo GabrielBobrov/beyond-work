@@ -70,12 +70,7 @@ public class ClienteController {
 		return "/cliente-search";
 	}
 	
-	@GetMapping("/agendamento")
-	public String viewAgendamento(Model model) {
-		List<CategoriaPrestador> categorias = categoriaPrestadorRepository.findAll(Sort.by("nome"));
-		model.addAttribute("categorias", categorias);
-		return "/cliente-agendamento";
-	}
+	
 	
 	@GetMapping("/pedido/")
 	public String viewPedidos(Model model) {

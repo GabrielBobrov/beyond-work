@@ -5,11 +5,93 @@
 <style type="text/css">
 
 </style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
 <link rel="stylesheet" href="bootstrap-datetimepicker.min.css">
-
-<script src="bootstrap-datetimepicker.min.js"></script>
-
 </head>
+<script>
+		$(document).ready(function() {
+
+            function limpa_formulário_cep() {
+                // Limpa valores do formulário de cep.
+                $("#rua").val("");
+                $("#bairro").val("");
+                $("#cidade").val("");
+                $("#uf").val("");
+                $("#ibge").val("");
+                $("#complemento").val("");
+            }
+            
+            //Quando o campo cep perde o foco.
+            $("#cep").blur(function() {
+
+                //Nova variável "cep" somente com dígitos.
+                var cep = $(this).val().replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        $("#rua").val("...");
+                        $("#bairro").val("...");
+                        $("#cidade").val("...");
+                        $("#uf").val("...");
+                        $("#ibge").val("...");
+
+                        //Consulta o webservice viacep.com.br/
+                        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                            if (!("erro" in dados)) {
+                                //Atualiza os campos com os valores da consulta.
+                                $("#rua").val(dados.logradouro);
+                                $("#bairro").val(dados.bairro);
+                                $("#cidade").val(dados.localidade);
+                                $("#uf").val(dados.uf);
+                                $("#ibge").val(dados.ibge);
+                            } //end if.
+                            else {
+                                //CEP pesquisado não foi encontrado.
+                                limpa_formulário_cep();
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+            });
+        });
+        
+        function checkPasswordMatch() {
+            var password = $("#senha").val();
+            var confirmPassword = $("#contraSenha").val();
+            if (password != confirmPassword)
+            	$('#cadastro').attr('disabled', 'disabled'),
+                $("#CheckPasswordMatch").html("Senhas estão diferentes!");
+            else
+            	$('#cadastro').removeAttr('disabled'),
+                $("#CheckPasswordMatch").html("Senhas estão OK.");
+        }
+        $(document).ready(function () {
+           $("#contraSenha").keyup(checkPasswordMatch);
+        });
+
+    </script>
+
 <body>
 <div layout:fragment="content">
 <div th:replace="~{test :: logo}"></div>
@@ -44,12 +126,39 @@
     <input type="text" th:field="*{precoVisitaBase}" class="form-control" th:errorclass="is-invalid"  placeholder="Preço estimativo de visita">
      <div class="invalid-feedback" th:errors="*{precoVisitaBase}"></div>
     </div>
+    <div class="form-group col-md-6">
+    <label for="inputPassword4">Confirmação de senha</label>
+      <input type="password" th:field="*{contraSenha}"  th:errorclass="is-invalid" class="form-control"  placeholder="Digite sua senha">
+      <div class="invalid-feedback" th:errors="*{senha}"></div>
+    <div class="registrationFormAlert" style="color:green;" id="CheckPasswordMatch"></div>
+    </div>
   <div class="form-group col-md-6">
     <label for="nome">Nome</label>
     <input type="text" th:field="*{nome}" class="form-control" th:errorclass="is-invalid"  placeholder="Digite seu nome">
 	 <div class="invalid-feedback" th:errors="*{nome}"></div> 
- </div> 
  </div>
+ <div class="form-group col-md-6">
+    <label for="sobrenome">Sobrenome</label>
+    <input type="text" th:field="*{sobrenome}" class="form-control" th:errorclass="is-invalid"  placeholder="Digite seu nome">
+	 <div class="invalid-feedback" th:errors="*{sobrenome}"></div> 
+ </div>
+     <div class="form-group col-md-6">
+    <label for="inputAddress">CEP</label>
+    <input type="text" th:field="*{cep}" class="form-control" th:errorclass="is-invalid"  placeholder="Somente números">
+     <div class="invalid-feedback" th:errors="*{cep}"></div>
+    </div> 
+   <div class="form-group col-md-6">
+    <label for="inputAddress">Cidade</label>
+    <input type="text"  th:field="*{cidade}" id="cidade" class="form-control" th:errorclass="is-invalid"   placeholder=" ">
+    <div class="invalid-feedback" th:errors="*{cidade}"></div>
+    </div>
+    <div class="form-group col-md-6">
+    <label for="inputAddress">UF</label>
+    <input type="text"  th:field="*{uf}"  id="uf" class="form-control" th:errorclass="is-invalid"   placeholder="">
+    <div class="invalid-feedback" th:errors="*{uf}"></div>
+    </div>
+ </div>
+ 
  <div class="form-row">
   <div class="form-group col-md-6">
     <label for="inputAddress2">CPF</label>
@@ -57,18 +166,31 @@
   	 <div class="invalid-feedback" th:errors="*{cpf}"></div>
   </div>
    <div class="form-group col-md-6">
+    <label for="inputAddress">Endereço</label>
+    <input type="text"  th:field="*{rua}" id="rua" class="form-control" th:errorclass="is-invalid"   placeholder=" ">
+    <div class="invalid-feedback" th:errors="*{rua}"></div>
+    </div>
+    <div class="form-group col-md-6">
+    <label for="inputAddress">Bairro</label>
+    <input type="text"  th:field="*{bairro}" id="bairro" class="form-control" th:errorclass="is-invalid"   placeholder=" ">
+    <div class="invalid-feedback" th:errors="*{bairro}"></div>
+    </div>
+    <div class="form-group col-md-6">
+    <label for="inputAddress">Complemento</label>
+    <input type="text" th:field="*{complemento}" id="complemento" class="form-control" th:errorclass="is-invalid"   placeholder=" ">
+    <div class="invalid-feedback" th:errors="*{complemento}"></div>
+    </div>
+   <div class="form-group col-md-6">
       <label for="inputCity">Tempo médio para visita</label>
       <input type="text" th:field="*{tempoChegarVista}" th:errorclass="is-invalid" placeholder="Digite aqui em quantas horas em média ocorrem suas visitas" class="form-control">
    	   <div class="invalid-feedback" th:errors="*{tempoChegarVista}"></div>
     </div>
-    </div>
-  <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputCity">Telefone</label>
       <input type="text" th:field="*{telefone}" th:errorclass="is-invalid" class="form-control">
    	   <div class="invalid-feedback" th:errors="*{telefone}"></div>
     </div>
-  </div>
+    </div>
    <div class="form-group col-md-12">
       <label for="inputCity">Categorias</label>
      <select   class="form-select" name="categoria" id="categoria" multiple="multiple" th:field="*{servicosOferecidos}" >
@@ -77,7 +199,8 @@
    	   <div class="invalid-feedback" th:errors="*{fotoFile}"></div>
     </div>
   
-  <button type="submit" class="btn btn-primary btn-lg btn-block">Cadastrar</button>
+<button type="submit" disabled="disabled" id="cadastro" class="btn btn-primary btn-lg btn-block">Cadastrar</button>
+<button type="submit" class="btn btn-primary btn-lg btn-block">Sair</button>
 </form>
 
 </div>

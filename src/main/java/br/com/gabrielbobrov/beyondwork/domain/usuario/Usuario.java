@@ -32,6 +32,10 @@ public class Usuario implements Serializable{
 	@Size(max = 80,message = "Nome muito grande, abrevie algum sobrenome")
 	private String nome;
 	
+	@NotBlank(message = "Digite um sobrenome")
+	@Size(max = 80,message = "Nome muito grande, abrevie algum sobrenome")
+	private String sobrenome;
+	
 	@NotBlank(message = "e-mail não pode ser vazio")
 	@Size(max = 60, message = "E-mail muito grande")
 	@Email(message = "E-mail invalido!")

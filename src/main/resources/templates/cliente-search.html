@@ -110,7 +110,7 @@ body {
           
           <div class="buy d-flex justify-content-between align-items-center">
             <div class="price text-success"><h5 class="mt-4" th:text="'Valor: ' + ${#numbers.formatCurrency(prestador.precoVisitaBase)}"></h5></div>
-             <a th:href="@{/cliente/agendamento}" class="card-button btn btn-primary mt-3">Agendar visita</a>
+             <a th:href="@{/cliente/agendamento} + '?prestadorId= ' + ${prestador.id}" class="card-button btn btn-primary mt-3">Agendar visita</a>
           </div>
           
         </div>

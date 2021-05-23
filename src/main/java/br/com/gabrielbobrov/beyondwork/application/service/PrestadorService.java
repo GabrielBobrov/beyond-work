@@ -94,5 +94,10 @@ public class PrestadorService {
 		return prestadores;
 
 	}
+	
+	public Prestador getPrestador(Prestador prestador) {
+		Prestador p = prestadorRepository.getOne(prestador.getId());
+		return p;
+	}
 
 }
