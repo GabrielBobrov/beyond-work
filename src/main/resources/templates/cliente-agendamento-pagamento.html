@@ -34,32 +34,23 @@ img {width:100%;}
                 
                     <div class="form-row">
                     	
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-12">
                         <label for="nome">Nome do prestador</label>
-                          <span class="form-control"  ></span>
+                          <span class="form-control"  th:text="${prestador.nome}"></span>
                         </div>
-                        <div class="form-group col-md-6">
-                        <label for="nome">Data do agendamento</label>
-                          <input type="datetime-local" class="form-control" id="inputEmail4" placeholder="Data">
-                        </div>
+                          
                       </div>
                       
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                        <label for="nome">CEP de destino</label>
-                            <input id="Mobile No." name="Mobile No." class="form-control" required="required" type="text">
-                        </div>
-                        <div class="form-group col-md-6">
-                        <label for="nome">Número do cartão de crédito</label>
-                            <input id="Mobile No." name="Mobile No." class="form-control" required="required" type="text">
-                        </div>
+                      
+                       
                         
                         
                     </div>              
                       <div class="form-group col-md-12">
                     <div class="form-row">
                     <h5 >Total: </h5>
-                             <div id="preco" class="price text-success"><h5 class="ml-3"> R$70,00</h5></div>
+                             <div id="preco" class="price text-success"><h5 class="ml-3" th:text="${#numbers.formatCurrency(prestador.taxtaFixa + prestador.precoVisitaBase )}"></h5></div>
                         </div>
                      </div>
                     

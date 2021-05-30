@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import br.com.gabrielbobrov.beyondwork.domain.pedido.Pedido;
+import br.com.gabrielbobrov.beyondwork.domain.agendamento.Agendamento;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,7 +33,7 @@ public class Pagamento implements Serializable {
 	@NotNull
 	@OneToOne
 	@MapsId
-	private Pedido pedido;
+	private Agendamento pedido;
 	
 	@NotNull
 	private LocalDateTime data;

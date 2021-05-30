@@ -27,16 +27,17 @@ public class AgendamentoController {
 
 	
 	
-	@GetMapping()
-	public String viewAgendamento(@RequestParam("prestadorId") Integer prestadorId ,Model model) {
+	@GetMapping("/adicionar")
+	public String adicionarPrestador(@RequestParam("prestadorId") Integer prestadorId ,Model model) {
 		Prestador prestador = prestadorRepository.findById(prestadorId).orElseThrow();
 		model.addAttribute("prestador", prestador);
 		return "/cliente-agendamento";
 	}
 	
 	@GetMapping("/pagamento")
-	public String viewPagamento(Model model) {
-		
+	public String viewPagamento(@RequestParam("prestadorId") Integer prestadorId ,Model model) {
+		Prestador prestador = prestadorRepository.findById(prestadorId).orElseThrow();
+		model.addAttribute("prestador", prestador);
 		return "/cliente-agendamento-pagamento";
 	}
 	

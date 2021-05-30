@@ -2,6 +2,7 @@ package br.com.gabrielbobrov.beyondwork.domain.agendamento;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

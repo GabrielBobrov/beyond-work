@@ -66,6 +66,8 @@ public class Prestador extends Usuario {
 	@ToString.Exclude
 	private Set<CategoriaPrestador> servicosOferecidos = new HashSet<>(0);
 	
+	private Integer taxtaFixa = 20;
+	
 	
 	public Integer calcularTempoEntrega(String cep) {
 		int soma = 0;
