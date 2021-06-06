@@ -8,7 +8,9 @@
 img {width:100%;}
 
 </style>
-
+<script type="text/javascript">
+console.log(getElementById("data").value);
+</script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -31,29 +33,34 @@ img {width:100%;}
                 </div>
             </div>
             <div class="col-md-8 py-5 border">
-            <form>
+            <form method="post" th:object="${agendamento}" th:action="@{agendamento/pagar} + '?prestadorId= ' + ${prestador.id}">
                 <h2 class="pb-4">Confirmação de agendamento</h2>
                 
                     <div class="form-row">
                     	
                         <div class="form-group col-md-6">
                         <label for="nome">Nome do prestador</label>
-                          <span class="form-control"  th:text="${prestador.nome}"></span>
+                          <span class="form-control"  th:text="${prestador.nome} "></span>
+                          
                         </div>
                         <div class="form-group col-md-6">
                         <label for="nome">Data do agendamento</label>
-                          <input type="datetime-local" class="form-control" id="inputEmail4" placeholder="Data">
+                          <input type="datetime-local" th:field="*{data}"  class="form-control" required="required"  placeholder="Data">
+                          <div class="invalid-feedback" th:errors="*{data}"></div>
                         </div>
                       </div>
                       
                     <div class="form-row">
                         <div class="form-group col-md-6">
                         <label for="nome">CEP de destino</label>
-                            <input id="Mobile No." name="Mobile No." class="form-control" required="required" type="text">
+                            <input id="Mobile No." th:field="*{cepDestino}" name="Mobile No." class="form-control" required="required" type="text">
+                            <div class="invalid-feedback" th:errors="*{cepDestino}"></div>
+                        	
                         </div>
                        <div class="form-group col-md-6">
                         <label for="nome">Informações adicionais</label>
-                            <input id="Mobile No." name="Mobile No." class="form-control" required="required" type="text">
+                            <input id="Mobile No." th:field="*{info}" name="Mobile No." class="form-control" required="required" type="text">
+                            <div class="invalid-feedback" th:errors="*{info}"></div>
                         </div>
                         
                         
@@ -61,7 +68,7 @@ img {width:100%;}
                     <div class="form-row">
                      <div class="form-group col-md-12">
                         <label for="nome">Número do cartão de crédito</label>
-                            <input id="Mobile No." name="Mobile No." class="form-control" required="required" type="text">
+                            <input id="Mobile No."th:field="*{pagamento}"  name="Mobile No." class="form-control" required="required" type="text">
                         </div>
                         </div>
                     
@@ -70,25 +77,25 @@ img {width:100%;}
                     <div class="form-group col-md-6">
                     <div class="form-row">
                     <h5>Valor do serviço: </h5>
-                             <div id="preco" class="price text-success"><h5 class="ml-3" th:text="${#numbers.formatCurrency(prestador.precoVisitaBase)}"></h5></div>
+                             <div id="preco"  class="price text-success"><h5 class="ml-3" th:field="*{subtotal}" th:text="${#numbers.formatCurrency(prestador.precoVisitaBase)}"></h5></div>
                         </div>
                      </div>
                       <div class="form-group col-md-6">
                     <div class="form-row">
                     <h5>Valor de garantia: </h5>
-                             <div id="preco" class="price text-success"><h5 class="ml-3" th:text="${#numbers.formatCurrency(prestador.taxtaFixa)}"></h5></div>
+                             <div id="preco"  class="price text-success"><h5 class="ml-3" th:text="${#numbers.formatCurrency(prestador.taxtaFixa)}"></h5></div>
                         </div>
                      </div>
                       <div class="form-group col-md-12">
                     <div class="form-row">
                     <h5 >Total: </h5>
-                             <div id="preco" class="price text-success"><h5 class="ml-3" th:text="${#numbers.formatCurrency(prestador.taxtaFixa + prestador.precoVisitaBase )}"></h5></div>
+                             <div id="preco" class="price text-success"><h5 class="ml-3" th:field="*{total}" th:text="${#numbers.formatCurrency(prestador.taxtaFixa + prestador.precoVisitaBase )}"></h5></div>
                         </div>
                      </div>
                     
                     
                     <div class="form-row">
-                        <a type="button" class="btn btn-primary mr-2 mt-3" th:href="@{/cliente/agendamento/pagamento} + '?prestadorId= ' + ${prestador.id}">Efetuar Pagamento</a>
+                        <button  class="btn btn-primary mr-2 mt-3" type="submit">Efetuar Pagamento</button>
                         <button type="button" class="btn btn-danger mt-3">Voltar</button>
                     </div>
                 </form>

@@ -66,7 +66,19 @@ public class Prestador extends Usuario {
 	@ToString.Exclude
 	private Set<CategoriaPrestador> servicosOferecidos = new HashSet<>(0);
 	
-	private Integer taxtaFixa = 20;
+	private Double taxtaFixa = 20.00;
+	
+	public BigDecimal getPrecoTotal() {
+		BigDecimal soma =  BigDecimal.ZERO;
+		
+		soma = soma.add(precoVisitaBase);
+		soma = soma.add(BigDecimal.valueOf(taxtaFixa));
+		
+		
+		
+		
+		return soma;
+	}
 	
 	
 	public Integer calcularTempoEntrega(String cep) {

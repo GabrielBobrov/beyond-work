@@ -2,21 +2,20 @@ package br.com.gabrielbobrov.beyondwork.domain.agendamento;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import br.com.gabrielbobrov.beyondwork.domain.cliente.Cliente;
-import br.com.gabrielbobrov.beyondwork.domain.pagamento.Pagamento;
 import br.com.gabrielbobrov.beyondwork.domain.prestador.Prestador;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -65,7 +64,8 @@ public class Agendamento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@NotNull
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime data;
 	
 	@NotNull
@@ -73,6 +73,7 @@ public class Agendamento {
 	private Cliente cliente;
 	
 	@NotNull
+	@Enumerated(EnumType.STRING)
 	private Status status;
 	
 	@NotNull
@@ -87,10 +88,17 @@ public class Agendamento {
 	@NotNull
 	private BigDecimal total;
 	
+	@NotNull
+	private String pagamento;
 	
+	@NotNull
+	private String cepDestino;
 	
-	@OneToOne(mappedBy = "pedido")
-	private Pagamento pagamento;
+	@NotNull
+	private String info;
+	
+//	@OneToOne(mappedBy = "pedido")
+//	private Pagamento pagamento;
 	
 	public String getFormattedId() {
 		return String.format("#%04d", id);
