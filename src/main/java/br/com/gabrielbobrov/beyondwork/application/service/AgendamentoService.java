@@ -23,9 +23,9 @@ public class AgendamentoService {
 	@Autowired
 	private AgendamentoRepository agendamentoRepository;
 	
-	public void saveAgendamento(Agendamento agendamento) {
-		
-		
+	public void doAgendamento(Agendamento agendamento) {
+		agendamento.setStatus(Status.Aguardando);
+		agendamento.setCliente(clienteRepository.findById(1).orElseThrow());
 		
 		//TODO: continuar a fazer agendamento
 		

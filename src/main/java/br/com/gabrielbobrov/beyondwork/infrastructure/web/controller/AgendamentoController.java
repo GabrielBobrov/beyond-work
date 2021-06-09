@@ -58,18 +58,21 @@ public class AgendamentoController {
 	
 	@PostMapping("/pagar")
 	public String viewPagamento(@ModelAttribute("agendamento") @Valid Agendamento agendamento,BindingResult result, @RequestParam("prestadorId") Integer prestadorId ,Model model) {
-//		if(result.hasErrors()) {
-//			return "/cliente-agendamento";
-//		}
 		Prestador prestador = prestadorRepository.findById(prestadorId).orElseThrow();
 		model.addAttribute("prestador", prestador);
-		agendamento.setStatus(Status.Aguardando);
-		System.out.println(agendamento.getData());
-		agendamento.setPrestador(prestador);
-		agendamento.setSubtotal(prestador.getPrecoVisitaBase());
-		agendamento.setTotal(prestador.getPrecoTotal());
-		agendamento.setCliente(clienteRepository.findById(1).orElseThrow());
-		agendamentoRepository.save(agendamento);
+			try {
+				
+				agendamento.setPrestador(prestador);
+				agendamento.setSubtotal(prestador.getPrecoVisitaBase());
+				agendamento.setTotal(prestador.getPrecoTotal());
+				agendamentoService.doAgendamento(agendamento);
+				agendamentoRepository.save(agendamento);
+				model.addAttribute("msg", "O prestador " +prestador.getNome() +" recebeu seu agendamento!");
+				return "/cliente-agendamento";
+				
+			}catch (Exception e) {
+				model.addAttribute("msg", e.getMessage());
+			}
 		return "/cliente-agendamento";
 	}
 	

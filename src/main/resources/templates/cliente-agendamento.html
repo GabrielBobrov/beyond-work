@@ -8,16 +8,14 @@
 img {width:100%;}
 
 </style>
-<script type="text/javascript">
-console.log(getElementById("data").value);
-</script>
+
 </head>
 <body>
 <div layout:fragment="content">
 <div th:replace="~{test :: logo}"></div>
 <div th:replace="~{test :: nav}"></div>
-<div class="alert alert-success text-center" role="alert">
-  O prestador recebeu seu agendamento!
+<div class="alert alert-success text-center" role="alert" th:if="${msg != null}">
+  <span th:text="${msg}"></span>
 </div>
 <section class="testimonial py-5" id="testimonial">
     <div class="container">
