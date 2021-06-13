@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.gabrielbobrov.beyondwork.application.service.ClienteService;
+import br.com.gabrielbobrov.beyondwork.application.service.HistoricoService;
 import br.com.gabrielbobrov.beyondwork.application.service.PrestadorService;
+import br.com.gabrielbobrov.beyondwork.domain.agendamento.Agendamento;
+import br.com.gabrielbobrov.beyondwork.domain.agendamento.HistoricoFilter;
 import br.com.gabrielbobrov.beyondwork.domain.cliente.Cliente;
 import br.com.gabrielbobrov.beyondwork.domain.cliente.ClienteRepository;
 import br.com.gabrielbobrov.beyondwork.domain.prestador.CategoriaPrestador;
@@ -40,9 +43,11 @@ public class PrestadorController {
 	private PrestadorService prestadorService;
 	
 	@Autowired
+	private HistoricoService historicoService;
+	
+	@Autowired
 	private CategoriaPrestadorRepository categoriaPrestadorRepository;
 	
-	//metodo deve estar na public controller
 	@GetMapping("/home")
 	public String home(Model model) {
 		List<CategoriaPrestador> categorias = categoriaPrestadorRepository.findAll(Sort.by("nome"));
@@ -82,6 +87,16 @@ public class PrestadorController {
 		List<CategoriaPrestador> categorias = categoriaPrestadorRepository.findAll(Sort.by("nome"));
 		model.addAttribute("categorias", categorias);
 		return "/cliente-pedido";
+	}
+	
+	@GetMapping("/historico")
+	public String viewHistorico(@ModelAttribute("historicoFilter") HistoricoFilter filter, Model model) {
+		Prestador prestadorId = prestadorRepository.findById(1).orElseThrow();
+		
+		List<Agendamento> agendamentos = historicoService.listPedidos(prestadorId.getId(), filter);
+		model.addAttribute("agendamentos",agendamentos);
+		model.addAttribute("filter", filter);
+		return "/prestador-historico";
 	}
 	
 	
