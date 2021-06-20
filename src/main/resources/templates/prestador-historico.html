@@ -22,43 +22,75 @@
     <br/>
 	<div class="row justify-content-center">
                         <div class="col-12 col-md-10 col-lg-8">
-                            <form id="form" class="card card-sm" method="get" th:object="${searchFilter}" th:action="@{/cliente/search}">
+                            <form id="form" class="card card-sm" th:object="${filter}" method="get" th:action="@{/prestador/historico}"  >
                                 <div class="card-body row no-gutters align-items-center">
                                     <div class="col-auto">
                                         <i class="fas fa-search h4 text-body"></i>
                                     </div>
                                 
-                                    <div class="col">
-                                    <input type="hidden" id="searchType" th:field="*{searchType}">
-                                    <input type="hidden" id="categoriaId" th:field="*{categoriaId}">
-                                        <input class="form-control form-control-lg form-control-borderless" th:field="*{texto}" type="text" placeholder="Pesquise pelo nome do prestador">
-                                    </div>
+                                    <div class="col-4">
+                                    <input type="hidden" id="searchType" >
+                                    <input type="hidden" id="categoriaId" >
+                                    <label for="nome">Número do serviço</label>
+                                        <input class="form-control form-control-lg form-control-borderless" th:field="*{pedidoId}"  type="text" placeholder="Pesquise pelo nome do prestador">
+                                         </div>
+                                    <div class="col-4">
+                                    <label for="nome">Data inicial</label>
+                                        <input class="form-control form-control-lg form-control-borderless" th:field="*{dataInicial}"  type="date" placeholder="Pesquise pelo nome do prestador">
+                                   </div>
+                                   <div class="col-4">
+                                   <label for="nome">Data final</label>
+                                        <input class="form-control form-control-lg form-control-borderless" th:field="*{dataFinal}"  type="date" placeholder="Pesquise pelo nome do prestador">
+                                   </div>
                                    
                                     <div class="col-auto">
-                                        <button class="btn btn-lg btn-primary" onclick="searchRest(null);" type="submit">Pesquisar</button>
+                                        <button class="btn btn-lg btn-primary"  type="submit">Pesquisar</button>
                                     </div>
                                     <!--end of col-->
                                 </div>
                             </form>
                         </div>
+                        <!--Table-->
+<table class="table table-striped w-auto" th:if="${agendamentos.size() > 0}">
+
+  <!--Table head-->
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Cliente</th>
+      <th>CEP</th>
+      <th>Valor Toal</th>
+      <th>Data</th>
+      
+    </tr>
+  </thead>
+  <!--Table head-->
+
+  <!--Table body-->
+  <tbody>
+    <tr class="table-info" th:each="pedido : ${agendamentos}">
+      <th scope="row">1</th>
+      <td><span th:text="${pedido.cliente.nome}"></span></td>
+      <td><span th:text="${pedido.cliente.formattedCep}"></span></td>
+      <td><span th:text="${#numbers.formatCurrency(pedido.total)}"></span></td>
+      <td><span th:text="${#temporals.format(pedido.data, 'dd/MM/yyyy HH:mm')}"></span></td>
+      
+    </tr>
+   
+  </tbody>
+  <!--Table body-->
+
+
+</table>
+<!--Table-->
+<span th:if="${agendamentos.size() == 0}">Nenhum item encontrado</span>
                         <!--end of col-->
                     </div>
+                    
 </div>
 
-			<div class="container mt-5">
-    <div class="row g-2">
-        <div class="col-md-4 mb-3" th:each="categoria : ${categorias}">
-            <div class="card p-3">
-                <div class="mt-3"> <img th:src="${categoria.imagem}" width="80" />
-                    <h3 class="mt-3 text-truncate" th:text="${categoria.nome}"></h3> <span class="text justify-content mt-3">Descrição que precisa salvar no banco da categoria</span>
-                    <div class="d-block mt-3"> <button th:onclick="'searchRest(' + ${categoria.id} + ');'" class=" btn btn-primary btn-sm btn-block">Ver prestadores da categoria</button> </div>
-                </div>
-            </div>
-        </div>
-        
-      
-    </div>
-</div>
+
+
 
 		</div>
 
