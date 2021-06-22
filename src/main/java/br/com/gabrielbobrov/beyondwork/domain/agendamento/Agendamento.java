@@ -112,5 +112,12 @@ public class Agendamento {
 			this.status = newStatus;
 		}
 	}
+
+	public void confirmAgendamento() {
+		Status newStatus = Status.Confirmado;
+		if(newStatus != null) {
+			this.status = newStatus;
+		}
+	}
 	
 }

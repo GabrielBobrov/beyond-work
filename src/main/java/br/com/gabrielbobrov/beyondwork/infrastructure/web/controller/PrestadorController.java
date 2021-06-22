@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.gabrielbobrov.beyondwork.application.service.ClienteService;
 import br.com.gabrielbobrov.beyondwork.application.service.HistoricoService;
 import br.com.gabrielbobrov.beyondwork.application.service.PrestadorService;
 import br.com.gabrielbobrov.beyondwork.domain.agendamento.Agendamento;
+import br.com.gabrielbobrov.beyondwork.domain.agendamento.Agendamento.Status;
+import br.com.gabrielbobrov.beyondwork.domain.agendamento.AgendamentoRepository;
 import br.com.gabrielbobrov.beyondwork.domain.agendamento.HistoricoFilter;
 import br.com.gabrielbobrov.beyondwork.domain.cliente.Cliente;
 import br.com.gabrielbobrov.beyondwork.domain.cliente.ClienteRepository;
@@ -44,6 +47,9 @@ public class PrestadorController {
 	
 	@Autowired
 	private HistoricoService historicoService;
+	
+	@Autowired
+	private AgendamentoRepository agendamentoRepository;
 	
 	@Autowired
 	private CategoriaPrestadorRepository categoriaPrestadorRepository;
@@ -98,6 +104,40 @@ public class PrestadorController {
 		model.addAttribute("filter", filter);
 		return "/prestador-historico";
 	}
+	
+	@GetMapping("/agendamentos/pendentes")
+	public String viewPedidosPendentes(Model model) {
+		Prestador prestadorId = prestadorRepository.findById(1).orElseThrow();
+		List<Agendamento> agendamentos = agendamentoRepository.findByStatus(Status.Aguardando);
+		model.addAttribute("agendamentos",agendamentos);
+		return "/prestador-pendentes";
+	}
+	
+	@PostMapping("/agendamentos/confirmar")
+	public String confirmAgendamento(@RequestParam("agendamentoId") Integer agendamentoId, Model model) {
+		Agendamento agendamento = agendamentoRepository.findById(agendamentoId).orElseThrow();
+		agendamento.confirmAgendamento();
+		agendamentoRepository.save(agendamento);
+		
+		model.addAttribute("agendamento", agendamento);
+		return "/prestador-confirmados";
+	}
+	
+	@GetMapping("/agendamentos/executados")
+	public String viewPedidosexecutados(Model model) {
+		List<CategoriaPrestador> categorias = categoriaPrestadorRepository.findAll(Sort.by("nome"));
+		model.addAttribute("categorias", categorias);
+		return "/prestador-pendentes";
+	}
+	
+	@GetMapping("/agendamentos/confirmados")
+	public String viewPedidosConfirmados(Model model) {
+		List<CategoriaPrestador> categorias = categoriaPrestadorRepository.findAll(Sort.by("nome"));
+		model.addAttribute("categorias", categorias);
+		return "/prestador-confirmados";
+	}
+	
+	
 	
 	
 

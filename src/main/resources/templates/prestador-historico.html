@@ -69,7 +69,7 @@
   <!--Table body-->
   <tbody>
     <tr class="table-info" th:each="pedido : ${agendamentos}">
-      <th scope="row">1</th>
+      <th scope="row"><span th:text="${pedido.id}"></span></th>
       <td><span th:text="${pedido.cliente.nome}"></span></td>
       <td><span th:text="${pedido.cliente.formattedCep}"></span></td>
       <td><span th:text="${#numbers.formatCurrency(pedido.total)}"></span></td>
@@ -83,8 +83,16 @@
 
 </table>
 <!--Table-->
-<span th:if="${agendamentos.size() == 0}">Nenhum item encontrado</span>
+
                         <!--end of col-->
+                    </div>
+                    <div th:if="${agendamentos.size() == 0}">
+                    <div class="alert alert-warning alert-dismissible fade show">
+    <h4 class="alert-heading"><i class="fa fa-warning"></i> Atenção!</h4>
+    <p>Preencha os filtros para encontrar agendamentos</p>
+    <hr>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+</div>
                     </div>
                     
 </div>
