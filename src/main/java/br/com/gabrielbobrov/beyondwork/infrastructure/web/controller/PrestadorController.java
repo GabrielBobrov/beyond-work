@@ -113,7 +113,7 @@ public class PrestadorController {
 		return "/prestador-pendentes";
 	}
 	
-	@PostMapping("/agendamentos/confirmar")
+	@PostMapping("/agendamento/confirmar")
 	public String confirmAgendamento(@RequestParam("agendamentoId") Integer agendamentoId, Model model) {
 		Agendamento agendamento = agendamentoRepository.findById(agendamentoId).orElseThrow();
 		agendamento.confirmAgendamento();
