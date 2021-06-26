@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import br.com.gabrielbobrov.beyondwork.domain.agendamento.Agendamento;
 import br.com.gabrielbobrov.beyondwork.domain.agendamento.AgendamentoRepository;
 import br.com.gabrielbobrov.beyondwork.domain.agendamento.HistoricoFilter;
+import br.com.gabrielbobrov.beyondwork.domain.agendamento.Agendamento.Status;
 
 @Service
 public class HistoricoService {
@@ -21,7 +22,7 @@ public List<Agendamento> listPedidos(Integer prestadorId, HistoricoFilter filter
 		Integer pedidoId = filter.getPedidoId();
 		
 		if(pedidoId != null) {
-			Agendamento agendamento = agendamentoRepository.findByIdAndPrestador_Id(pedidoId, prestadorId);
+			Agendamento agendamento = agendamentoRepository.findByIdAndPrestador_IdAndStatus(pedidoId, prestadorId,Status.Concluido);
 			return List.of(agendamento);
 		}
 		LocalDate dataInicial = filter.getDataInicial();
@@ -35,7 +36,7 @@ public List<Agendamento> listPedidos(Integer prestadorId, HistoricoFilter filter
 			dataFinal = LocalDate.now();
 		}
 		
-		return agendamentoRepository.findByDateInterval(prestadorId, dataInicial.atStartOfDay(), dataFinal.atTime(23, 59, 59));
+		return agendamentoRepository.findByDateInterval(prestadorId, dataInicial.atStartOfDay(), dataFinal.atTime(23, 59, 59), Status.Concluido);
 	
 	}
 

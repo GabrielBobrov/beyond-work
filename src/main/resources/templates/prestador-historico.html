@@ -10,10 +10,10 @@
 <body>
 <div layout:fragment="content">
 <div th:replace="~{test :: logo}"></div>
-<div th:replace="~{test :: nav}"></div>
+<div th:replace="~{test-prest :: nav}"></div>
 
 <div class="col-lg-4 col-lg-offset-4">
-<h2>Home do cliente</h2>
+<h2>Historico de serviços</h2>
 </div>
 <div class="text-center">
 
@@ -21,34 +21,46 @@
 <div class="container">
     <br/>
 	<div class="row justify-content-center">
+                        <div class="row justify-content-center">
                         <div class="col-12 col-md-10 col-lg-8">
                             <form id="form" class="card card-sm" th:object="${filter}" method="get" th:action="@{/prestador/historico}"  >
+                                
                                 <div class="card-body row no-gutters align-items-center">
                                     <div class="col-auto">
                                         <i class="fas fa-search h4 text-body"></i>
                                     </div>
                                 
-                                    <div class="col-4">
-                                    <input type="hidden" id="searchType" >
-                                    <input type="hidden" id="categoriaId" >
-                                    <label for="nome">Número do serviço</label>
-                                        <input class="form-control form-control-lg form-control-borderless" th:field="*{pedidoId}"  type="text" placeholder="Pesquise pelo nome do prestador">
-                                         </div>
-                                    <div class="col-4">
-                                    <label for="nome">Data inicial</label>
-                                        <input class="form-control form-control-lg form-control-borderless" th:field="*{dataInicial}"  type="date" placeholder="Pesquise pelo nome do prestador">
-                                   </div>
-                                   <div class="col-4">
-                                   <label for="nome">Data final</label>
-                                        <input class="form-control form-control-lg form-control-borderless" th:field="*{dataFinal}"  type="date" placeholder="Pesquise pelo nome do prestador">
+                                    <div class="col-12">
+	                                    <input type="hidden" id="searchType" >
+	                                    <input type="hidden" id="categoriaId" >
+	                                    <label for="nome">Número do serviço</label>
+                                        <input class="form-control form-control-lg form-control-borderless" th:field="*{pedidoId}"  type="text" placeholder="Pesquise pelo ID do pedido">
+                                    </div>
+                                    
+                                    <div class="col-12 mt-3">
+                                    	<label for="nome">Data inicial</label>
+                                        <input class="form-control form-control-lg form-control-borderless" th:field="*{dataInicial}"  type="date" placeholder=" ">
                                    </div>
                                    
-                                    <div class="col-auto">
+                                   <div class="col-12 mt-3">
+                                   		<label for="nome">Data final</label>
+                                        <input class="form-control form-control-lg form-control-borderless" th:field="*{dataFinal}"  type="date" placeholder=" ">
+                                   </div>
+                                   
+                                    <div class="col-12 text-right mt-3">
                                         <button class="btn btn-lg btn-primary"  type="submit">Pesquisar</button>
                                     </div>
                                     <!--end of col-->
                                 </div>
+                                
                             </form>
+                            <div class="alert alert-warning alert-dismissible fade show mt-3" th:if="${agendamentos.size() == 0}" role="alert">
+							  <strong>Nenhum agendamento encontrado.</strong>
+							  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							    <span aria-hidden="true">&times;</span>
+							  </button>
+							</div>
+                            
                         </div>
                         <!--Table-->
 <table class="table table-striped w-auto" th:if="${agendamentos.size() > 0}">
@@ -69,7 +81,7 @@
   <!--Table body-->
   <tbody>
     <tr class="table-info" th:each="pedido : ${agendamentos}">
-      <th scope="row">1</th>
+      <th scope="row"><span th:text="${pedido.id}"></span></th>
       <td><span th:text="${pedido.cliente.nome}"></span></td>
       <td><span th:text="${pedido.cliente.formattedCep}"></span></td>
       <td><span th:text="${#numbers.formatCurrency(pedido.total)}"></span></td>
@@ -83,8 +95,16 @@
 
 </table>
 <!--Table-->
-<span th:if="${agendamentos.size() == 0}">Nenhum item encontrado</span>
+
                         <!--end of col-->
+                    </div>
+                    <div th:if="${agendamentos.size() == 0}">
+                    <div class="alert alert-warning alert-dismissible fade show">
+    <h4 class="alert-heading"><i class="fa fa-warning"></i> Atenção!</h4>
+    <p>Preencha os filtros para encontrar agendamentos</p>
+    <hr>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+</div>
                     </div>
                     
 </div>

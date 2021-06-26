@@ -41,20 +41,22 @@
 </div>
 <nav  class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="nav">
   <div class="container-fluid justify-content-between">
-    <a class="navbar-brand"  th:href="@{/cliente/home}">Home</a>
+    <a class="navbar-brand"  th:href="@{/prestador/agendamentos/pendentes}">Home</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <div class="navbar-nav me-auto mb-2 mb-lg-0">
+       
       <div class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Pedidos
+          Ações
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" th:href="@{/cliente/agendamentos/pendentes}">Pedidos Aguardando Aprovação</a>
-          <a class="dropdown-item" th:href="@{/cliente/agendamentos/confirmados}">Pedidos Aprovados</a>
-          <a class="dropdown-item" th:href="@{/cliente/agendamentos/executados}">Pedidos Efetuados</a>
+          <a class="dropdown-item" th:href="@{/prestador/agendamentos/pendentes}">Pedidos Aguardando aprovação</a>
+          <a class="dropdown-item" th:href="@{/prestador/agendamentos/confirmados}">Pedidos Confirmados</a>
+          <a class="dropdown-item" th:href="@{/prestador/agendamentos/executados}">Pedidos Finalizados</a>
+          <a class="dropdown-item" th:href="@{/prestador/historico}">Historico de serviços</a>
           
         </div>
       </div>
@@ -68,7 +70,7 @@
       
       <div class="justify-content-between" >    
       	<span class="navbar-text">
-        	olá, Gabriel!
+        	Ola, Gabriel!
       	</span>
       </div>
       

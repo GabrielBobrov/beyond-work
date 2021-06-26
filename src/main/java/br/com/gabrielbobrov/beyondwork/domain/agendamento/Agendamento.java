@@ -30,7 +30,8 @@ public class Agendamento {
 	public enum Status{
 		Aguardando(1,"Aguardando Confirmação", false),
 		Confirmado(2,"Confirmado", false),
-		Concluido(3,"Serviço Conlcuido", true);
+		Concluido(3,"Serviço Conlcuido", false),
+		Recusado(4,"Serviço recusado", true);
 		
 		Status(int ordem, String descricao, boolean ultimo) {
 			this.ordem = ordem;
@@ -108,6 +109,27 @@ public class Agendamento {
 		int ordem = status.getOrdem();
 		Status newStatus = Status.fromOrdem(ordem + 1);
 		
+		if(newStatus != null) {
+			this.status = newStatus;
+		}
+	}
+
+	public void confirmAgendamento() {
+		Status newStatus = Status.Confirmado;
+		if(newStatus != null) {
+			this.status = newStatus;
+		}
+	}
+	
+	public void recuseAgendamento() {
+		Status newStatus = Status.Recusado;
+		if(newStatus != null) {
+			this.status = newStatus;
+		}
+	}
+	
+	public void finishAgendamento() {
+		Status newStatus = Status.Concluido;
 		if(newStatus != null) {
 			this.status = newStatus;
 		}

@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.gabrielbobrov.beyondwork.application.service.ClienteService;
 import br.com.gabrielbobrov.beyondwork.application.service.HistoricoService;
 import br.com.gabrielbobrov.beyondwork.application.service.PrestadorService;
 import br.com.gabrielbobrov.beyondwork.domain.agendamento.Agendamento;
+import br.com.gabrielbobrov.beyondwork.domain.agendamento.Agendamento.Status;
+import br.com.gabrielbobrov.beyondwork.domain.agendamento.AgendamentoRepository;
 import br.com.gabrielbobrov.beyondwork.domain.agendamento.HistoricoFilter;
 import br.com.gabrielbobrov.beyondwork.domain.cliente.Cliente;
 import br.com.gabrielbobrov.beyondwork.domain.cliente.ClienteRepository;
@@ -44,6 +47,9 @@ public class PrestadorController {
 	
 	@Autowired
 	private HistoricoService historicoService;
+	
+	@Autowired
+	private AgendamentoRepository agendamentoRepository;
 	
 	@Autowired
 	private CategoriaPrestadorRepository categoriaPrestadorRepository;
@@ -98,6 +104,62 @@ public class PrestadorController {
 		model.addAttribute("filter", filter);
 		return "/prestador-historico";
 	}
+	
+	@GetMapping("/agendamentos/pendentes")
+	public String viewPedidosPendentes(Model model) {
+		List<Agendamento> agendamentos = agendamentoRepository.findByStatus(Status.Aguardando);
+		model.addAttribute("agendamentos",agendamentos);
+		return "/prestador-pendentes";
+	}
+	
+	@PostMapping("/agendamento/confirmar")
+	public String confirmAgendamento(@RequestParam("agendamentoId") Integer agendamentoId, Model model) {
+		Agendamento agendamento = agendamentoRepository.findById(agendamentoId).orElseThrow();
+		agendamento.confirmAgendamento();
+		agendamentoRepository.save(agendamento);
+		
+		model.addAttribute("agendamento", agendamento);
+		viewPedidosConfirmados(model);
+		return "/prestador-confirmados";
+	}
+	
+	@PostMapping("/agendamento/recusar")
+	public String recuseAgendamento(@RequestParam("agendamentoId") Integer agendamentoId, Model model) {
+		Agendamento agendamento = agendamentoRepository.findById(agendamentoId).orElseThrow();
+		agendamento.recuseAgendamento();
+		agendamentoRepository.save(agendamento);
+		
+		model.addAttribute("agendamento", agendamento);
+		viewPedidosPendentes(model);
+		return "/prestador-pendentes";
+	}
+	
+	@PostMapping("/agendamento/finalizar")
+	public String finishAgendamento(@RequestParam("agendamentoId") Integer agendamentoId, Model model) {
+		Agendamento agendamento = agendamentoRepository.findById(agendamentoId).orElseThrow();
+		agendamento.finishAgendamento();
+		agendamentoRepository.save(agendamento);
+		
+		model.addAttribute("agendamento", agendamento);
+		viewPedidosPendentes(model);
+		return "/prestador-pendentes";
+	}
+	
+	@GetMapping("/agendamentos/executados")
+	public String viewPedidosexecutados(Model model) {
+		List<Agendamento> agendamentos = agendamentoRepository.findByStatus(Status.Concluido);
+		model.addAttribute("agendamentos",agendamentos);
+		return "/prestador-executados";
+	}
+	
+	@GetMapping("/agendamentos/confirmados")
+	public String viewPedidosConfirmados(Model model) {
+		List<Agendamento> agendamentos = agendamentoRepository.findByStatus(Status.Confirmado);
+		model.addAttribute("agendamentos",agendamentos);
+		return "/prestador-confirmados";
+	}
+	
+	
 	
 	
 

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{test}">
+<head th:replace="~{test :: head}">
+<style type="text/css">
+</style>
+
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+		<div th:replace="~{test :: logo}"></div>
+		<div th:replace="~{test-prest :: nav}"></div>
+
+		<div class="col-lg-4 col-lg-offset-4 p-2">
+			<h2>Serviços Recusados</h2>
+		</div>
+		
+		<div class="container card p-2">
+				<div class="card-header bg-secundary p-2">
+					<h5 class=" ">TROCA DE TELA CELULAR</h5>
+				</div>
+	
+			<div class="form-row p-2">
+					<div class="form-group col-md-1">
+						<div class="card p-1">
+							<img class="card-image" width="50px" src="https://img-premium.flaticon.com/png/512/3309/3309879.png?token=exp=1622933120~hmac=9cdb3185c73c4f0169c3218c14ce5704"/>
+						</div>
+					</div>
+				<div class="form-group col-md-5">
+					<div class="card p-1">
+						<div class="card-text">
+							<p>CLIENTE: José Maria
+							<p>TELEFONE: 61 98252 2626
+							<p>ENDEREÇO: QD 209 Lote 8 Residencial Mirante
+							<p>CEP: 71930-750
+						</div>
+					</div>
+				</div>		
+				<div class="form-group col-md-5">
+					<div class="card p-1">
+						<div class="card-text">
+							<p>DATA: 08/05/2021
+							<p> DIA: Sábado
+							<p>HORA: 08:00 - 10:00
+							<p>VALOR: R$ 90,00
+						</div>
+					</div>						
+				</div>	
+				<div class="form-group col-md-1">
+					<div class="card p-1">
+						<div class="card-text text-danger bg-danger">
+							<p>.
+							<p>.
+							<p>.
+							<p>.
+						</div>
+					</div>
+				</div>						
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-12">
+					<div class="card">
+						<div class="card-text">
+							<p>MOTIVO: prestador afastado por motivos de saúde.
+							<p>MOTIVO: cliente ausente no horário agendado.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+</body>
+
+</html>
