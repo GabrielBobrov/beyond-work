@@ -107,7 +107,6 @@ public class PrestadorController {
 	
 	@GetMapping("/agendamentos/pendentes")
 	public String viewPedidosPendentes(Model model) {
-		Prestador prestadorId = prestadorRepository.findById(1).orElseThrow();
 		List<Agendamento> agendamentos = agendamentoRepository.findByStatus(Status.Aguardando);
 		model.addAttribute("agendamentos",agendamentos);
 		return "/prestador-pendentes";
@@ -120,20 +119,43 @@ public class PrestadorController {
 		agendamentoRepository.save(agendamento);
 		
 		model.addAttribute("agendamento", agendamento);
+		viewPedidosConfirmados(model);
 		return "/prestador-confirmados";
+	}
+	
+	@PostMapping("/agendamento/recusar")
+	public String recuseAgendamento(@RequestParam("agendamentoId") Integer agendamentoId, Model model) {
+		Agendamento agendamento = agendamentoRepository.findById(agendamentoId).orElseThrow();
+		agendamento.recuseAgendamento();
+		agendamentoRepository.save(agendamento);
+		
+		model.addAttribute("agendamento", agendamento);
+		viewPedidosPendentes(model);
+		return "/prestador-pendentes";
+	}
+	
+	@PostMapping("/agendamento/finalizar")
+	public String finishAgendamento(@RequestParam("agendamentoId") Integer agendamentoId, Model model) {
+		Agendamento agendamento = agendamentoRepository.findById(agendamentoId).orElseThrow();
+		agendamento.finishAgendamento();
+		agendamentoRepository.save(agendamento);
+		
+		model.addAttribute("agendamento", agendamento);
+		viewPedidosPendentes(model);
+		return "/prestador-pendentes";
 	}
 	
 	@GetMapping("/agendamentos/executados")
 	public String viewPedidosexecutados(Model model) {
-		List<CategoriaPrestador> categorias = categoriaPrestadorRepository.findAll(Sort.by("nome"));
-		model.addAttribute("categorias", categorias);
-		return "/prestador-pendentes";
+		List<Agendamento> agendamentos = agendamentoRepository.findByStatus(Status.Concluido);
+		model.addAttribute("agendamentos",agendamentos);
+		return "/prestador-executados";
 	}
 	
 	@GetMapping("/agendamentos/confirmados")
 	public String viewPedidosConfirmados(Model model) {
-		List<CategoriaPrestador> categorias = categoriaPrestadorRepository.findAll(Sort.by("nome"));
-		model.addAttribute("categorias", categorias);
+		List<Agendamento> agendamentos = agendamentoRepository.findByStatus(Status.Confirmado);
+		model.addAttribute("agendamentos",agendamentos);
 		return "/prestador-confirmados";
 	}
 	

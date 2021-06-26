@@ -10,10 +10,11 @@ import br.com.gabrielbobrov.beyondwork.domain.agendamento.Agendamento.Status;
 
 public interface AgendamentoRepository extends JpaRepository<Agendamento, Integer>{
 	
-	public Agendamento findByIdAndPrestador_Id(Integer pedidoId, Integer prestadorId);
+	public Agendamento findByIdAndPrestador_IdAndStatus(Integer pedidoId, Integer prestadorId, Status status);
 	
-	@Query("SELECT a FROM Agendamento a WHERE a.prestador.id = ?1 AND a.data BETWEEN ?2 AND ?3")
-	public List<Agendamento> findByDateInterval(Integer restauranteId, LocalDateTime dataInicial, LocalDateTime dataFinal);
+	
+	@Query("SELECT a FROM Agendamento a WHERE a.prestador.id = ?1 AND a.data BETWEEN ?2 AND ?3 AND a.status = ?4")
+	public List<Agendamento> findByDateInterval(Integer prestadorId, LocalDateTime dataInicial, LocalDateTime dataFinal, Status status);
 	
 	public List<Agendamento>  findByStatus(Status status);
 

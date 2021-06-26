@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{test}">
-<head th:replace="~{test :: head}">
+	  xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{test-prest}">
+<head th:replace="~{test-prest :: head}">
 <style type="text/css">
 </style>
 
@@ -11,7 +11,7 @@
 
 	<div layout:fragment="content">
 		<div th:replace="~{test :: logo}"></div>
-		<div th:replace="~{test :: nav}"></div>
+		<div th:replace="~{test-prest :: nav}"></div>
 
 		<div class="col-lg-4 col-lg-offset-4 p-2">
 			<h2>Serviços Pendentes</h2>
@@ -65,9 +65,10 @@
 							<button  type="submit" id="aceitar" class=" btn btn-primary btn-lg btn-block">Confirmar</button>
 						</div>
 						</form>
-						<form method="post" th:action="@{/restaurante/pedido/proximoStatus}">
+						<form method="post" th:action="@{/prestador/agendamento/recusar}">
+						<input type="hidden" name="agendamentoId" th:value="${agendamento.id}" />
 						<div class="form-group ">
-							<a href="/prestador/recusados" type="submit" id="recusar" class=" btn btn-danger btn-lg btn-block">Não Realizar</a>
+							<button type="submit" id="recusar" class=" btn btn-danger btn-lg btn-block">Não Realizar</button>
 						</div>
 						</form>
 					</div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{test-prest}">
-<head th:replace="~{test-prest :: head}">
+	  xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{test}">
+<head th:replace="~{test :: head}">
 <style type="text/css">
 </style>
 
@@ -11,10 +11,10 @@
 
 	<div layout:fragment="content">
 		<div th:replace="~{test :: logo}"></div>
-		<div th:replace="~{test-prest :: nav}"></div>
+		<div th:replace="~{test :: nav}"></div>
 
 		<div class="col-lg-4 col-lg-offset-4 p-2">
-			<h2>Serviços Confirmados</h2>
+			<h2>Serviços Executados</h2>
 		</div>
 		
 		<div class="container card p-2" th:each="agendamento : ${agendamentos}">
@@ -58,20 +58,7 @@
 				</div>	
 				<div class="container card p-1">
 				
-					<div class="form-row">
-					<form method="post" th:action="@{/prestador/agendamento/finalizar} + '?agendamentoId ' + ${agendamento.id}">
-						<input type="hidden" name="agendamentoId" th:value="${agendamento.id}" />
-						<div class="form-group">
-							<button  type="submit" id="aceitar" class=" btn btn-primary btn-lg btn-block">Finalizar</button>
-						</div>
-						</form>
-						<form method="post" th:action="@{/prestador/agendamento/recusar}">
-						<input type="hidden" name="agendamentoId" th:value="${agendamento.id}" />
-						<div class="form-group ">
-							<button type="submit" id="recusar" class=" btn btn-danger btn-lg btn-block">Não Realizar</button>
-						</div>
-						</form>
-					</div>
+					
 				</div>
 						
 			</div>

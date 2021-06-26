@@ -13,9 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.gabrielbobrov.beyondwork.application.service.ClienteService;
 import br.com.gabrielbobrov.beyondwork.application.service.PrestadorService;
+import br.com.gabrielbobrov.beyondwork.domain.agendamento.Agendamento;
+import br.com.gabrielbobrov.beyondwork.domain.agendamento.AgendamentoRepository;
+import br.com.gabrielbobrov.beyondwork.domain.agendamento.Agendamento.Status;
 import br.com.gabrielbobrov.beyondwork.domain.cliente.Cliente;
 import br.com.gabrielbobrov.beyondwork.domain.cliente.ClienteRepository;
 import br.com.gabrielbobrov.beyondwork.domain.prestador.CategoriaPrestador;
@@ -41,6 +45,9 @@ public class ClienteController {
 	
 	@Autowired
 	private CategoriaPrestadorRepository categoriaPrestadorRepository;
+	
+	@Autowired
+	private AgendamentoRepository agendamentoRepository;
 	
 	//metodo deve estar na public controller
 	@GetMapping("/home")
@@ -79,6 +86,27 @@ public class ClienteController {
 		return "/cliente-pedido";
 	}
 	
+	@GetMapping("/agendamentos/pendentes")
+	public String viewPedidosPendentes(Model model) {
+		List<Agendamento> agendamentos = agendamentoRepository.findByStatus(Status.Aguardando);
+		model.addAttribute("agendamentos",agendamentos);
+		return "/cliente-pendentes";
+	}
+	
+	
+	@GetMapping("/agendamentos/executados")
+	public String viewPedidosexecutados(Model model) {
+		List<Agendamento> agendamentos = agendamentoRepository.findByStatus(Status.Concluido);
+		model.addAttribute("agendamentos",agendamentos);
+		return "/cliente-executados";
+	}
+	
+	@GetMapping("/agendamentos/confirmados")
+	public String viewPedidosConfirmados(Model model) {
+		List<Agendamento> agendamentos = agendamentoRepository.findByStatus(Status.Confirmado);
+		model.addAttribute("agendamentos",agendamentos);
+		return "/cliente-confirmados";
+	}
 	
 
 }
