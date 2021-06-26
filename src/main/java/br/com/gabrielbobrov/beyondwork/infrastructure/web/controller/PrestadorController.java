@@ -56,44 +56,11 @@ public class PrestadorController {
 	
 	@GetMapping("/home")
 	public String home(Model model) {
-		List<CategoriaPrestador> categorias = categoriaPrestadorRepository.findAll(Sort.by("nome"));
-		model.addAttribute("categorias", categorias);
-		model.addAttribute("searchFilter", new SearchFilter());
-		//implementar segurança para fazer pedidos by cliente
-		return "/cliente-home";
-	}
-	@PostMapping("/save")
-	public String cadastro( @ModelAttribute("cliente") @Valid Cliente cliente, BindingResult result, Model model) {
-		if(result.hasErrors()) {
-			return "/cliente-cadastro";
-		}
-		clienteService.saveCliente(cliente);
-		
-		return "/cliente-cadastro";
-	}
-	@GetMapping("/search")
-	public String search(@ModelAttribute ("searchFilter") SearchFilter filter, Model model) {
-		//filter.processFilter(cmdString);
-		List<Prestador> prestadores = prestadorService.search(filter);
-		ControllerHelper.addCategoriasToRequest(categoriaPrestadorRepository, model);
-		model.addAttribute("prestadores",prestadores);
-		model.addAttribute("searchFilter",filter);
-		return "/cliente-search";
+		List<Agendamento> agendamentos = agendamentoRepository.findByStatus(Status.Aguardando);
+		model.addAttribute("agendamentos",agendamentos);
+		return "/prestador-pendentes";
 	}
 	
-	@GetMapping("/agendamento")
-	public String viewAgendamento(Model model) {
-		List<CategoriaPrestador> categorias = categoriaPrestadorRepository.findAll(Sort.by("nome"));
-		model.addAttribute("categorias", categorias);
-		return "/cliente-agendamento";
-	}
-	
-	@GetMapping("/pedido/")
-	public String viewPedidos(Model model) {
-		List<CategoriaPrestador> categorias = categoriaPrestadorRepository.findAll(Sort.by("nome"));
-		model.addAttribute("categorias", categorias);
-		return "/cliente-pedido";
-	}
 	
 	@GetMapping("/historico")
 	public String viewHistorico(@ModelAttribute("historicoFilter") HistoricoFilter filter, Model model) {
