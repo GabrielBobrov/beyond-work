@@ -99,6 +99,9 @@
 <div class="col-lg-4 col-lg-offset-4">
 <h2 >Cadastro de prestador </h2>
 </div>
+<div class="alert alert-success text-center" role="alert" th:if="${msg != null}">
+  <span th:text="${msg}"></span>
+</div>
 
 <div class="container card ">
 	<form method="post" th:object="${prestador}" th:action="@{/public/prestador/save}" enctype="multipart/form-data">

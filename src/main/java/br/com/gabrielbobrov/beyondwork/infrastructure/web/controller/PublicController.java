@@ -20,50 +20,56 @@ import br.com.gabrielbobrov.beyondwork.domain.prestador.Prestador;
 @Controller
 @RequestMapping("/public")
 public class PublicController {
-	
+
 	@Autowired
 	private ClienteService clienteService;
-	
+
 	@Autowired
 	private PrestadorService prestadorService;
-	
+
 	@Autowired
 	private CategoriaPrestadorRepository categoriaPrestadorRepository;
-	
+
 	@GetMapping("/login")
 	public String login() {
 		return "/login";
 	}
-	
+
 	@GetMapping("/prestador/cadastro")
 	public String pagePrestadorCadastro(@ModelAttribute("prestador") Prestador prestador, Model model) {
-		
+
 		ControllerHelper.addCategoriasToRequest(categoriaPrestadorRepository, model);
 		return "/prestador-cadastro";
 	}
+
 	@PostMapping("/prestador/save")
-	public String prestadorCadastro( @ModelAttribute("prestador") @Valid Prestador prestador, BindingResult result, Model model) {
+	public String prestadorCadastro(@ModelAttribute("prestador") @Valid Prestador prestador, BindingResult result,
+			Model model) {
 		ControllerHelper.addCategoriasToRequest(categoriaPrestadorRepository, model);
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			return "/prestador-cadastro";
 		}
-	 ControllerHelper.addCategoriasToRequest(categoriaPrestadorRepository, model);
-	 prestadorService.savePrestador(prestador);
-		
+		ControllerHelper.addCategoriasToRequest(categoriaPrestadorRepository, model);
+		prestadorService.savePrestador(prestador);
+		model.addAttribute("msg", "Prestador Cadastrado!");
+
 		return "/prestador-cadastro";
 	}
-	
+
 	@GetMapping("/cliente/cadastro")
-	public String pageClienteCadastro(@ModelAttribute("cliente") Cliente cliente,Model model) {
+	public String pageClienteCadastro(@ModelAttribute("cliente") Cliente cliente, Model model) {
 		return "/cliente-cadastro";
 	}
+
 	@PostMapping("/cliente/save")
-	public String clienteCadastro( @ModelAttribute("cliente") @Valid Cliente cliente, BindingResult result, Model model) {
-		if(result.hasErrors()) {
+	public String clienteCadastro(@ModelAttribute("cliente") @Valid Cliente cliente, BindingResult result,
+			Model model) {
+		if (result.hasErrors()) {
 			return "/cliente-cadastro";
 		}
 		clienteService.saveCliente(cliente);
-		
+		model.addAttribute("msg", "Cliente Cadastrado!");
+
 		return "/cliente-cadastro";
 	}
 
